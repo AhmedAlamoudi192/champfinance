@@ -38,7 +38,7 @@ const Chat: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
             <div>
                 <p className="p-2">
                     <span className="font-black">Hamoor: </span>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies lacinia, nunc nisl aliquet nunc, eget aliquet nisl nisl sit
+                    Generating Response...
                 </p>
                 {messages.map((message, index) => (
                     <p key={index} className="p-2">
