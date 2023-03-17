@@ -170,7 +170,11 @@ export const chatRouter = createTRPCRouter({
 
         const contentArray = await scrape({ url: companyUrl });
 
-        const content = contentArray.join("\n\n");
+        const baseSystemMessage = [
+          `The following is a finacial report for the company ${company}`,
+        ];
+
+        const content = [...baseSystemMessage, ...contentArray].join("\n\n");
 
         const chunks = await splitter.createDocuments([content]);
 

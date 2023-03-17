@@ -54,7 +54,7 @@ const Chat: NextPage = () => {
                 <meta name="description" content="Gain inights to financial data using ChatGPT" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <header className="text-3xl text-center my-4 font-black">
+            <header className="text-3xl text-center my-8 font-black">
                 ChampFinance
             </header>
             <div className="overflow-y-auto mb-64" ref={bottomRef}>
