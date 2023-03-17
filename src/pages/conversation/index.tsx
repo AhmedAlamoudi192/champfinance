@@ -22,6 +22,8 @@ const Chat: NextPage = () => {
         type: 'text',
         company: query.company as string ?? 'aramco',
         question: message,
+    }, {
+        enabled: false
     })
 
 
@@ -46,9 +48,10 @@ const Chat: NextPage = () => {
                         {message}
                     </p>
                 ))}
-                <ChatInput value={message} onChange={(e) => setMessage(e.target.value)} onKeyPress={(e) => {
+                <ChatInput value={message} onChange={(e) => setMessage(e.target.value)} onKeyPress={async (e) => {
                     if (e.key === "Enter") {
                         setMessage("");
+                        chatQuery.refetch()
                     }
                 }} />
             </div>

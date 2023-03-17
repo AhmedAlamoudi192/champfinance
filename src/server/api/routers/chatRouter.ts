@@ -7,6 +7,8 @@ import {
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { writeFile } from "fs/promises";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { companies } from "~/server/companies";
+import { scrape } from "~/server/scraper";
 
 const vectaraUrl = "https://experimental.willow.vectara.io/v1/chat/completions";
 
@@ -42,7 +44,7 @@ export const requestSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("text"),
     question: z.string(),
-    company: z.string(),
+    company: z.enum(["Takeween"]),
   }),
 ]);
 
@@ -137,10 +139,12 @@ export const chatRouter = createTRPCRouter({
         } as const;
       }
     } else if (input.type === "text") {
-      const company = input.company;
+      const company = input.company.toLowerCase();
 
-      //
-      const content = financialInfo(company);
+      const companyUrl = companies[input.company];
+
+      
+      scrape(companyUrl)
 
       const chunks = await splitter.createDocuments([content]);
       const chatResponse = await getChatCompletion(chunks);

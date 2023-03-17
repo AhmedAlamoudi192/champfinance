@@ -1,0 +1,3 @@
+export const companies = {
+    "takween": "https://www.saudiexchange.sa/wps/portal/saudiexchange/hidden/company-profile-main/!ut/p/z1/jZBPT8MwDMU_C4ceqU1Ku8KtiC38G1upEMUXlELIKqVJ1WWr-u3JxqloDHyz_XvPTwaCEsiIba2Eq60R2vevlLzFWYLsJsUFn7Ep5rOLq_x6ys_w_hxexgAWy9gDy3n0gE_IMQH6jx5_qQz_1tMYSec8wfwxyxdsEiMW7CdwIOIeOJbhaAo-gTsgpW31_bDMVFGqgDr5KTvZhZvOj1fOtevLAAPs-z5U1iotw3fbBHhIsrJrB-WY3HE7l72JEx-i32ivJr9qhRmKoamsP8SiFKGQBtrmucT69pSqIdJbdfIFQpHYkA!!/p0/IZ7_5A602H80O0VC4060O4GML81G57=CZ6_5A602H80OGF2E0QF9BQDEG10K4=NJstatementsTabData=/?statementType=0&reportType=0&symbol=2380",
+} as const
