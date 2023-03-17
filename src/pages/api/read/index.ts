@@ -1,7 +1,6 @@
 import {
   AzureKeyCredential,
   DocumentAnalysisClient,
-  type DocumentSpan,
 } from "@azure/ai-form-recognizer";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { z } from "zod";
