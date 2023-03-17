@@ -20,6 +20,8 @@ const Chat: NextPage = () => {
         question: message,
     }, {
         enabled: true,
+        refetchInterval: false,
+        refetchOnWindowFocus: false,
     })
 
     return (
@@ -30,16 +32,16 @@ const Chat: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <header className="text-3xl text-center my-4">
-                Hamoor
+                ChimpFinance
             </header>
             <div>
                 <p className="p-2">
-                    <span className="font-black">Hamoor: </span>
+                    <span className="font-black">ChimpFinance: </span>
                     {chatQuery.isLoading ? <Lottie animationData={spinner} className="p-5" /> : chatQuery.data?.assitantResponse?.message.content}
                 </p>
                 {hamoorMessages.map((message, index) => (
                     <p key={index} className="p-2">
-                        <span className="font-black">Hamoor: </span>
+                        <span className="font-black">ChimpFinance: </span>
                         {message}
                     </p>
                 ))}
