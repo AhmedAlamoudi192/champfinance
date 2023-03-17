@@ -9,7 +9,6 @@ const companies = [
     { id: 2, name: 'Elm' },
     { id: 3, name: 'Aramco' },
     { id: 4, name: 'Alrajhi' },
-    { id: 5, name: 'Alrajhi' },
     // More companies...
 ] as const
 
@@ -31,7 +30,7 @@ export default function Combox() {
     return (
         <>
             <Combobox as="div" value={selectedCompany} onChange={setSelectedCompany} className="mb-4">
-                <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">Search for a Company</Combobox.Label>
+                <Combobox.Label className="block text-md font-medium leading-6 text-gray-900">Search for a Company</Combobox.Label>
                 <div className="relative mt-2">
                     <Combobox.Input
                         className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -79,8 +78,8 @@ export default function Combox() {
             </Combobox>
 
             <Link
-                className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href={`/conversation/?company=${selectedCompany.name.toLowerCase()}`}         >
-                Tell me about the company
+                className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href={`/conversation/?company=${selectedCompany.name.toLowerCase()}`}         >
+                Summarize Latest Report
             </Link>
 
         </>

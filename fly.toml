@@ -1,0 +1,47 @@
+# fly.toml file generated for champfinance on 2023-03-17T19:51:03+03:00
+
+app = "champfinance"
+kill_signal = "SIGINT"
+kill_timeout = 5
+primary_region = "ams"
+processes = []
+
+[build]
+  [build.args]
+    NEXT_PUBLIC_EXAMPLE = "Value goes here"
+    DATABASE_URL="file:./db.sqlite"
+    AZURE_API_KEY="6f95adb49d874478a599ad43cad766da"
+    VECTARA_API_KEY="zwt_kFPZYDNI-pVAfk9dJtTcN5bSaTr3evnDcoJfyg"
+
+
+[env]
+  PORT = "8080"
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

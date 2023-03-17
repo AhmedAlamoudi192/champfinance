@@ -5,3 +5,14 @@
 #__next {
   min-height: 100%;
 }
+
+html {
+  background: rgb(249, 250, 251);
+  background: linear-gradient(
+    160deg,
+    rgba(249, 250, 251, 1) 0%,
+    rgba(165, 180, 252, 1) 25%,
+    rgba(249, 250, 251, 1) 100%
+  );
+  min-height: 100%;
+}

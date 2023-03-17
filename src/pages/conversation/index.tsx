@@ -9,6 +9,7 @@ import Lottie from "lottie-react";
 import spinner from "~/components/spinner.json"
 import { z } from "zod";
 import { messageSchema } from "~/server/api/routers/chatRouter";
+import { Card } from "flowbite-react";
 
 
 const Chat: NextPage = () => {
@@ -27,10 +28,10 @@ const Chat: NextPage = () => {
 
     const messagesComponent = (
         nonSystemMessages.map((message, index) => (
-            <p key={index} className="p-2 leading-6">
+            <Card key={index} className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2">
                 <span className="font-black">{message.role === "user" ? "You" : "ChimpFinance"}: </span>
                 {message.content}
-            </p>
+            </Card>
         ))
     )
 
@@ -54,7 +55,7 @@ const Chat: NextPage = () => {
                 <meta name="description" content="Gain inights to financial data using ChatGPT" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <header className="text-3xl text-center my-8 font-black">
+            <header className="text-5xl text-center my-8 font-black">
                 ChampFinance
             </header>
             <div className="overflow-y-auto mb-64" ref={bottomRef}>
