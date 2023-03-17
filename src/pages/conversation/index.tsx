@@ -5,11 +5,8 @@ import Combox from "~/components/ComboBox";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
-
-type Data = {
-    conversationId: string
-    companyName: string
-}
+import Lottie from "lottie-react";
+import spinner from "~/components/spinner.json"
 
 
 const Chat: NextPage = () => {
@@ -17,20 +14,18 @@ const Chat: NextPage = () => {
     const [hamoorMessages, setHamoorMessages] = useState<string[]>([]);
     const { query } = useRouter();
 
-
     const chatQuery = api.chat.askQuestion.useQuery({
         type: 'text',
         company: query.company as string ?? 'aramco',
         question: message,
     }, {
-        enabled: false
+        enabled: true,
     })
-
 
     return (
         <>
             <Head>
-                <title>Hamoor {query.companyName} Report</title>
+                <title>ChimpFinance {query.companyName} Report</title>
                 <meta name="description" content="Gain inights to financial data using ChatGPT" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -40,7 +35,7 @@ const Chat: NextPage = () => {
             <div>
                 <p className="p-2">
                     <span className="font-black">Hamoor: </span>
-                    {chatQuery.isLoading ? 'Generating Response...' : chatQuery.data?.greeting}
+                    {chatQuery.isLoading ? <Lottie animationData={spinner} className="p-5" /> : chatQuery.data?.assitantResponse?.message.content}
                 </p>
                 {hamoorMessages.map((message, index) => (
                     <p key={index} className="p-2">

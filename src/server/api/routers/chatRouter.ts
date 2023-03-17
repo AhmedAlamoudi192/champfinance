@@ -44,7 +44,7 @@ export const requestSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("text"),
     question: z.string(),
-    company: z.enum(["Takeween"]),
+    company: z.enum(["takween"]),
   }),
 ]);
 
@@ -70,7 +70,7 @@ const chatCompletionSchema = z.object({
   ),
 });
 
-const getChatCompletion = async (chunks: any) => {
+const getInitialMessage = async (chunks: any) => {
   const sys_messages = chunks.map((c) => {
     return {
       role: "system",
@@ -108,7 +108,7 @@ export const chatRouter = createTRPCRouter({
         input.url
       );
 
-      // The "prebuilt-read" model (`beginReadDocument` method) only extracts information about the textual content of the
+      // The "prebuilt-read" model (`beginReadDocume  nt` method) only extracts information about the textual content of the
       // document, such as page text elements and information about the language of the text.
       const result = await poller.pollUntilDone();
       const { pages, content } = result;
@@ -124,7 +124,7 @@ export const chatRouter = createTRPCRouter({
 
         const chunks = await splitter.createDocuments([content]);
 
-        chatResponse = await getChatCompletion(chunks);
+        chatResponse = await getInitialMessage(chunks);
 
         await writeFile(`splitted-text.json`, JSON.stringify(chunks), "utf8");
         await writeFile(
@@ -141,13 +141,14 @@ export const chatRouter = createTRPCRouter({
     } else if (input.type === "text") {
       const company = input.company.toLowerCase();
 
-      const companyUrl = companies[input.company];
+      const companyUrl = companies[company];
 
-      
-      scrape(companyUrl)
+      // const content = scrape(companyUrl);
+
+      const content = await financialInfo(companyUrl);
 
       const chunks = await splitter.createDocuments([content]);
-      const chatResponse = await getChatCompletion(chunks);
+      const chatResponse = await getInitialMessage(chunks);
 
       return {
         assitantResponse: chatResponse.choices[chatResponse.choices.length - 1],
@@ -157,5 +158,5 @@ export const chatRouter = createTRPCRouter({
 });
 
 function financialInfo(company: string) {
-  return "Current Stock: 100$";
+  return Promise.resolve("Current stock is 100$");
 }

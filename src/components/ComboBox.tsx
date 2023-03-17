@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import { useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
@@ -19,9 +5,11 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const companies = [
-    { id: 1, name: 'Aramco' },
-    { id: 2, name: 'Apple' },
-    { id: 3, name: 'Microsoft' },
+    { id: 1, name: 'Takween' },
+    { id: 2, name: 'Elm' },
+    { id: 3, name: 'Aramco' },
+    { id: 4, name: 'Alrajhi' },
+    { id: 5, name: 'Alrajhi' },
     // More companies...
 ]
 
@@ -31,9 +19,9 @@ export function classNames(...classes: string[]) {
 
 export default function Combox() {
     const [query, setQuery] = useState('')
-    const [selectedCompany, setSelectedCompany] = useState(null)
+    const [selectedCompany, setSelectedCompany] = useState(companies[0])
 
-    const filteredPeople =
+    const filteredCompanies =
         query === ''
             ? companies
             : companies.filter((person) => {
@@ -54,9 +42,9 @@ export default function Combox() {
                         <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     </Combobox.Button>
 
-                    {filteredPeople.length > 0 && (
+                    {filteredCompanies.length > 0 && (
                         <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            {filteredPeople.map((person) => (
+                            {filteredCompanies.map((person) => (
                                 <Combobox.Option
                                     key={person.id}
                                     value={person}
@@ -91,7 +79,7 @@ export default function Combox() {
             </Combobox>
 
             <Link
-                className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href={`/report/${selectedCompany?.name}`}         >
+                className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href={`/conversation/?company=${selectedCompany.name.toLowerCase()}`}         >
                 Tell me about the company
             </Link>
 
