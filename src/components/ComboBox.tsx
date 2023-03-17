@@ -11,7 +11,7 @@ const companies = [
     { id: 4, name: 'Alrajhi' },
     { id: 5, name: 'Alrajhi' },
     // More companies...
-]
+] as const
 
 export function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -24,8 +24,8 @@ export default function Combox() {
     const filteredCompanies =
         query === ''
             ? companies
-            : companies.filter((person) => {
-                return person.name.toLowerCase().includes(query.toLowerCase())
+            : companies.filter((c) => {
+                return c.name.toLowerCase().includes(query.toLowerCase())
             })
 
     return (
@@ -44,10 +44,10 @@ export default function Combox() {
 
                     {filteredCompanies.length > 0 && (
                         <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            {filteredCompanies.map((person) => (
+                            {filteredCompanies.map((company) => (
                                 <Combobox.Option
-                                    key={person.id}
-                                    value={person}
+                                    key={company.id}
+                                    value={company}
                                     className={({ active }) =>
                                         classNames(
                                             'relative cursor-default select-none py-2 pl-3 pr-9',
@@ -57,7 +57,7 @@ export default function Combox() {
                                 >
                                     {({ active, selected }) => (
                                         <>
-                                            <span className={classNames('block truncate', selected && 'font-semibold')}>{person.name}</span>
+                                            <span className={classNames('block truncate', selected && 'font-semibold')}>{company.name}</span>
 
                                             {selected && (
                                                 <span
