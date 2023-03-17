@@ -44,3 +44,4 @@ yarn-error.log*
 # examples files
 result.json
 splitted-text.json
+chatgpt-response.json
