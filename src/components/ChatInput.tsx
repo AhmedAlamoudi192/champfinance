@@ -2,7 +2,7 @@ import { classNames as cls } from "./ComboBox";
 
 export default function ChatInput({ ...props }: React.ComponentProps<"input">) {
     return (
-        <div className="bottom-0 absolute w-full p-2">
+        <div className="w-full p-2 fixed bottom-4">
             <label htmlFor="chat" className="sr-only">
                 Chat Text
             </label>
