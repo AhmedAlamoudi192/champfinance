@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import scrapeIt from "scrape-it";
 
-export default function handler({ url }) {
+export default async function handler({ url }) {
   console.log("begin the request");
-  let rows = [];
-  scrapeIt(url, {
+    let rows = [];
+    url = "https://www.saudiexchange.sa/wps/portal/saudiexchange/hidden/company-profile-main/!ut/p/z1/rZFNc5swEIZ_iw8cba3BxqQznY4gNqYFDKZxHS4egbFMAhLhw7L59VWSkzNu2kN1W-2zo2dfoRhtUczIKaekzTkjhawfY303xTqoSwNW9kKdQ7i4M8P7uT2GHxP06xqAKJhKIPA0F9Zgg47if5mHPxwMf5-PrxHDs3UIfRyu1NkUIFI_AjcU34DPHD61sGfoO4ppwZP3wDBLNIOiuM4OWZ3Vo66W18e2rZovCigghBhRzmmRjVJeKiDb316-Xvcb0u3z7JweCaOZrORt1ShQ8bolhQJXbQV4V5ekfs5aiZQkZ8P3aihImx5vGR1506LttcgtrslInR4rUpOy-bjCf1RUYNC1clSBfqwATHbR050VXJ6b5gLnwPWY18PJwwfniRt9_nOt-feOMFzcG-7mnDIMlpaINnCFt3PA671-LMbzjY3DZYmdjRlQMjzTuZ3QpFwVyzkJDhjvhW9ZTSAqPyfDWflgU6au6GlqT18eF2Zj2jrOzyvTOuHJhFiajx0qXdYhjhY8cl_Deo3jLY2W7Ino5M4oljlWhF2iS5lw-ekzFTQUZQxV5cMWcmcYJxetOLny_cHgN3wrSWI!/p0/IZ7_5A602H80O0VC4060O4GML81G57=CZ6_5A602H80OGF2E0QF9BQDEG10K4=NJstatementsTabData=/?statementType=2&reportType=0&symbol=7203"
+  const req1 = scrapeIt(url, { 
     titles: " thead.cf .numeric",
     values: "tbody .numeric",
     labels: "tbody tr td:first-child",
@@ -91,7 +92,7 @@ export default function handler({ url }) {
 
   let newUrl = url.replace("statementType=0", "statementType=2");
 
-  scrapeIt(newUrl, {
+  const req2 = scrapeIt(newUrl, {
     titles: "thead.cf .numeric",
     values: "tbody .numeric",
     labels: "tbody tr td:first-child",
@@ -173,7 +174,11 @@ export default function handler({ url }) {
       index = index + 4;
       rows.push(row);
     });
-    console.log(rows);
-    return rows;
+   
   });
+
+  return await Promise.all([req1, req2]).then(() => {
+     console.log(rows);
+    return rows;
+  })
 }
