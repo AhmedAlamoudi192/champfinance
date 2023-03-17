@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Gain inights to financial data using ChatGPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="text-3xl text-center my-4">
+      <header className="text-3xl text-center my-4 font-black">
         ChimpFinance
       </header>
       <div className="flex flex-col items-center">
