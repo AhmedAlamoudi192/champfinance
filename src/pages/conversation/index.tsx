@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { GetServerSideProps, InferGetServerSidePropsType, type NextPage } from "next";
 import Head from "next/head";
 import ChatInput from "~/components/ChatInput";
@@ -7,9 +8,9 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Lottie from "lottie-react";
 import spinner from "~/components/spinner.json"
-import { z } from "zod";
-import { messageSchema } from "~/server/api/routers/chatRouter";
-import { Card } from "flowbite-react";
+import { type z } from "zod";
+import { type messageSchema } from "~/server/api/routers/chatRouter";
+import { Card, Spinner } from "flowbite-react";
 
 
 const Chat: NextPage = () => {
@@ -29,7 +30,7 @@ const Chat: NextPage = () => {
     const messagesComponent = (
         nonSystemMessages.map((message, index) => (
             <Card key={index} className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2">
-                <span className="font-black">{message.role === "user" ? "You" : "ChimpFinance"}: </span>
+                <span className="font-black text-lg">{message.role === "user" ? "You" : "ChimpFinance"} </span>
                 {message.content}
             </Card>
         ))
@@ -60,15 +61,25 @@ const Chat: NextPage = () => {
             </header>
             <div className="overflow-y-auto mb-64" ref={bottomRef}>
                 {chatQuery.isLoading ? <Lottie animationData={spinner} className="p-5" /> : messagesComponent}
+                {nextMessage.isLoading ? <div className="mx-auto text-center">
+                    <Spinner size={'xl'} color={'purple'}
+                        aria-label="Loading Question" className="text-indigo-300 text-center mt-2" />
+                </div> : <></>}
             </div>
             <ChatInput value={message} onChange={(e) => setMessage(e.target.value)} onKeyPress={async (e) => {
                 if (e.key === "Enter") {
-                    const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const]
+                    const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const];
                     setMessagesArray(messagesWithNewOne);
                     const result = await nextMessage.mutateAsync(messagesWithNewOne);
                     setMessagesArray([...messagesWithNewOne, result.message]);
                     scrollToBottom();
                 }
+            }} onIconClick={async function () {
+                const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const];
+                setMessagesArray(messagesWithNewOne);
+                const result = await nextMessage.mutateAsync(messagesWithNewOne);
+                setMessagesArray([...messagesWithNewOne, result.message]);
+                scrollToBottom();
             }} />
         </>
     );

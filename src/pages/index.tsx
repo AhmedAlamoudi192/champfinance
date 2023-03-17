@@ -22,7 +22,7 @@ const Home: NextPage = () => {
           Make better investment decisions.
         </section>
         <p className="font-semibold text-xl mb-2">
-          ChampFinance summarises the latest financial data from the world's largest companies
+          ChampFinance summarises the latest financial data from Saudi Arabia&apos;s largest companies.
         </p>
       </main>
 
