@@ -12,7 +12,7 @@ import { scrape } from "~/server/scraper";
 const vectaraUrl = "https://experimental.willow.vectara.io/v1/chat/completions";
 
 const userPrompt =
-  "You are a proffesional financial analyst. Based on the given data, summarize it and give an opinion about the company";
+  "You are a proffesional financial analyst. Based on the given data, summarize it and give an opinion about the company. Make sure to support your analysis with figures from the report.";
 
 type SystemMessage = {
   role: "system";

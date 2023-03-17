@@ -17,8 +17,8 @@ const Home: NextPage = () => {
       </header>
 
 
-      <main className="p-4">
-        <section className="text-start font-bold text-4xl mb-4">
+      <main className="p-4 lg:text-center">
+        <section className="font-bold text-4xl mb-4">
           Make better investment decisions.
         </section>
         <p className="font-semibold text-xl mb-2">

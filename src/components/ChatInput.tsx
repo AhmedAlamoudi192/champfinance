@@ -11,8 +11,8 @@ export default function ChatInput({ onIconClick, ...props }: React.ComponentProp
                     type="text"
                     name="chat"
                     id="chat"
-                    className="block w-full rounded-md border-0 py-1.5 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="Enter you message here"
+                    className="block w-full rounded-md border-0 py-5 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-lg font-semibold"
+                    placeholder="Ask a question about the latest report"
                     {...props}
                 />
                 <button className="absolute inset-y-0 right-0 flex items-center pr-3" onClick={onIconClick}>

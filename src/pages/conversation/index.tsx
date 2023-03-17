@@ -59,8 +59,10 @@ const Chat: NextPage = () => {
             <header className="text-5xl text-center my-8 font-black">
                 ChampFinance
             </header>
-            <div className="overflow-y-auto mb-64" ref={bottomRef}>
-                {chatQuery.isLoading ? <Lottie animationData={spinner} className="p-5" /> : messagesComponent}
+            <div className="mb-64" ref={bottomRef}>
+                {chatQuery.isLoading ? <div>
+                    <Lottie animationData={spinner} className="p-5" />
+                </div> : messagesComponent}
                 {nextMessage.isLoading ? <div className="mx-auto text-center">
                     <Spinner size={'xl'} color={'purple'}
                         aria-label="Loading Question" className="text-indigo-300 text-center mt-2" />
