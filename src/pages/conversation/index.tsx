@@ -20,12 +20,12 @@ const Chat: NextPage = () => {
     const nextMessage = api.chat.nextMessage.useMutation();
     const endRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         scrollToBottom();
     }, [messagesArray])
 
     const scrollToBottom = () => {
-        if (endRef !== null && endRef.current !== null) {
+        if (endRef && endRef.current) {
             endRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
@@ -37,10 +37,13 @@ const Chat: NextPage = () => {
         nonSystemMessages.map((message, index) => {
             const isLastMessage = index === nonSystemMessages.length - 1;
             return (
-                <Card key={index} className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2 text-justify" ref={isLastMessage ? endRef : undefined}>
-                    <span className="font-black text-lg">{message.role === "user" ? "You" : "ChampFinance"} </span>
-                    {message.content}
-                </Card>
+                <div key={index} ref={isLastMessage ? endRef : undefined}>
+                    <Card className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2 text-justify" ref={isLastMessage ? endRef : undefined}>
+                        <span className="font-black text-lg">{message.role === "user" ? "You" : "ChampFinance"} </span>
+                        {message.content}
+                    </Card>
+                </div>
+
             )
         })
     )
@@ -52,6 +55,8 @@ const Chat: NextPage = () => {
         enabled: true,
         refetchInterval: false,
         refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+        refetchOnMount: false,
         onSuccess(data) {
             setMessagesArray(data?.messages)
         },
@@ -89,6 +94,7 @@ const Chat: NextPage = () => {
                 setMessagesArray(messagesWithNewOne);
                 const result = await nextMessage.mutateAsync(messagesWithNewOne);
                 setMessagesArray([...messagesWithNewOne, result.message]);
+                scrollToBottom();
             }} />
         </>
     );
