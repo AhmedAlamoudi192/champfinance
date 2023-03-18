@@ -5,7 +5,7 @@ import { z } from "zod";
  * built with invalid env vars.
  */
 const server = z.object({
-    DATABASE_URL: z.string().url(),
+    // DATABASE_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]),
     // FORM_RECOGNIZER_API_ENDPOINT: z.string().url(),
     // AZURE_API_KEY: z.string(),

@@ -39,11 +39,10 @@ const Chat: NextPage = () => {
             return (
                 <div key={index} ref={isLastMessage ? endRef : undefined}>
                     <Card className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2 text-justify" ref={isLastMessage ? endRef : undefined}>
-                        <span className="font-black text-lg">{message.role === "user" ? "You" : "ChampFinance"} </span>
+                        <span className="font-black text-lg">{message.role === "user" ? "You" : "Champ"} </span>
                         {message.content}
                     </Card>
                 </div>
-
             )
         })
     )
@@ -73,9 +72,9 @@ const Chat: NextPage = () => {
             <header className="text-5xl text-center my-8 font-black">
                 ChampFinance
             </header>
-            <div className="overflow-y-auto">
+            <div className="overflow-y-auto mb-32">
                 {chatQuery.isLoading ? <div>
-                    <Lottie animationData={spinner} className="p-5" />
+                    <Lottie style={{height:200}}  animationData={spinner} className="m-5" />
                 </div> : messagesComponent}
                 {nextMessage.isLoading ? <div className="mx-auto text-center">
                     <Spinner size={'xl'} color={'purple'}
@@ -86,15 +85,16 @@ const Chat: NextPage = () => {
                 if (e.key === "Enter") {
                     const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const];
                     setMessagesArray(messagesWithNewOne);
+                    setMessage("");
                     const result = await nextMessage.mutateAsync(messagesWithNewOne);
                     setMessagesArray([...messagesWithNewOne, result.message]);
                 }
             }} onIconClick={async function () {
                 const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const];
                 setMessagesArray(messagesWithNewOne);
+                setMessage("");
                 const result = await nextMessage.mutateAsync(messagesWithNewOne);
                 setMessagesArray([...messagesWithNewOne, result.message]);
-                scrollToBottom();
             }} />
         </>
     );

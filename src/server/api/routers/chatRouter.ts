@@ -6,13 +6,14 @@ import {
 } from "@azure/ai-form-recognizer";
 import { writeFile } from "fs/promises";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { companies } from "~/server/companies";
 import { scrape } from "~/server/scraper";
+import { companyData } from "~/server/data";
+import report from "splitted_text.json";
 
 const vectaraUrl = "https://experimental.willow.vectara.io/v1/chat/completions";
 
 const userPrompt =
-  "You are a proffesional financial analyst. Based on the given data, summarize it and give an opinion about the company. Make sure to support your analysis with figures from the report.";
+  "You are a proffesional financial analyst. Based on the given data, summarize it for a highschool student. Make sure to support your analysis with figures from the report.";
 
 type SystemMessage = {
   role: "system";
@@ -164,19 +165,26 @@ export const chatRouter = createTRPCRouter({
           } as const;
         }
       } else if (input.type === "text") {
-        const company = input.company.toLowerCase();
+        const companyName = input.company.toLowerCase();
+        let chunks;
 
-        const companyUrl = companies[company];
+        if (companyName !== "aramco") {
+          const companyUrl = companyData.find(
+            (c) => c.companyName.toLowerCase() === companyName
+          )?.companyUrl;
 
-        const contentArray = await scrape({ url: companyUrl });
+          const contentArray = await scrape({ url: companyUrl });
 
-        const baseSystemMessage = [
-          `The following is a finacial report for the company ${company}`,
-        ];
+          const baseSystemMessage = [
+            `The following is finacial data for the company ${companyName}`,
+          ];
 
-        const content = [...baseSystemMessage, ...contentArray].join("\n\n");
+          const content = [...baseSystemMessage, ...contentArray].join("\n\n");
 
-        const chunks = await splitter.createDocuments([content]);
+          chunks = await splitter.createDocuments([content]);
+        } else {
+          chunks = report;
+        }
 
         const sys_messages = chunks.map((c) => {
           return {
