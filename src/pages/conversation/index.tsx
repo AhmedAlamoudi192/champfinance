@@ -94,7 +94,6 @@ const Chat: NextPage = () => {
                 setMessagesArray(messagesWithNewOne);
                 const result = await nextMessage.mutateAsync(messagesWithNewOne);
                 setMessagesArray([...messagesWithNewOne, result.message]);
-                scrollToBottom();
             }} />
         </>
     );
