@@ -6,8 +6,8 @@ import {
 } from "@azure/ai-form-recognizer";
 import { writeFile } from "fs/promises";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { companies } from "~/server/companies";
 import { scrape } from "~/server/scraper";
+import { companyData } from "~/server/data";
 
 const vectaraUrl = "https://experimental.willow.vectara.io/v1/chat/completions";
 
@@ -164,14 +164,16 @@ export const chatRouter = createTRPCRouter({
           } as const;
         }
       } else if (input.type === "text") {
-        const company = input.company.toLowerCase();
+        const companyName = input.company.toLowerCase();
 
-        const companyUrl = companies[company];
+        const companyUrl = companyData.find(
+          (c) => c.companyName.toLowerCase() === companyName
+        )?.companyUrl;
 
         const contentArray = await scrape({ url: companyUrl });
 
         const baseSystemMessage = [
-          `The following is a finacial report for the company ${company}`,
+          `The following is a finacial report for the company ${companyName}`,
         ];
 
         const content = [...baseSystemMessage, ...contentArray].join("\n\n");
