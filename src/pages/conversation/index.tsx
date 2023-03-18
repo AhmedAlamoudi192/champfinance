@@ -39,7 +39,7 @@ const Chat: NextPage = () => {
             return (
                 <div key={index} ref={isLastMessage ? endRef : undefined}>
                     <Card className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2 text-justify" ref={isLastMessage ? endRef : undefined}>
-                        <span className="font-black text-lg">{message.role === "user" ? "You" : "ChampFinance"} </span>
+                        <span className="font-black text-lg">{message.role === "user" ? "You" : "Champ"} </span>
                         {message.content}
                     </Card>
                 </div>

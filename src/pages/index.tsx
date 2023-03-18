@@ -1,5 +1,7 @@
+import { Button, Card } from "flowbite-react";
 import { type NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import Script from "next/script";
 import Combox from "~/components/ComboBox";
 
@@ -26,9 +28,35 @@ const Home: NextPage = () => {
         </p>
       </main>
 
-      <div className="flex flex-col items-center mx-4">
-        <Combox />
-      </div>
+      <section className="flex flex-col gap-8 mb-32">
+        <Card className="flex flex-col items-center mx-4">
+          <h2 className="font-black text-indigo-800 text-4xl">Balance Sheets and Income Statements</h2>
+          <h3>
+            Explore a company&apos;s balance sheet and income statement and get ahead of the market.
+          </h3>
+          <Combox queryType="balance_sheet_and_income_statement" />
+        </Card>
+        <Card className="flex flex-col items-center mx-4">
+          <h2 className="font-black text-blue-800 text-4xl">Financial Statements</h2>
+          <h3>
+            Explore a company&apos;s financial statements and get a better overview of the company&apos;s financial health.
+          </h3>
+          <Combox queryType="fin_statement" />
+        </Card>
+        <Card className="flex flex-col items-center mx-4">
+          <h2 className="font-black text-sky-800 text-4xl">Market Conditions</h2>
+          <h3>
+            Ask about market conditions and get a summary of the latest financial data.
+          </h3>
+          <button
+            type="button"
+            className="rounded-md bg-sky-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+          >
+            Learn about the current Saudi Market
+          </button>
+        </Card>
+      </section>
+
     </>
   );
 };
