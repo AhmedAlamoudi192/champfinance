@@ -27,9 +27,7 @@ const Home: NextPage = () => {
       </main>
 
       <div className="flex flex-col items-center mx-4">
-        <div className="flex flex-col items-center">
-          <Combox />
-        </div>
+        <Combox />
       </div>
     </>
   );

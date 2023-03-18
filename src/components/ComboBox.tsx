@@ -28,7 +28,7 @@ export default function Combox() {
 
     return (
         <>
-            <Combobox as="div" value={selectedCompany} onChange={setSelectedCompany} className="mb-4 w-96">
+            <Combobox as="div" value={selectedCompany} onChange={setSelectedCompany} className="mb-4 w-full md:w-96">
                 <Combobox.Label className="block text-md font-medium leading-6 text-gray-900">Select a Company</Combobox.Label>
                 <div className="relative mt-2">
                     <Combobox.Input
