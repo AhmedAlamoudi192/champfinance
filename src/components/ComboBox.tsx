@@ -32,7 +32,7 @@ export default function Combox() {
                 <Combobox.Label className="block text-md font-medium leading-6 text-gray-900">Select a Company</Combobox.Label>
                 <div className="relative mt-2">
                     <Combobox.Input
-                        className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-indigo-900 font-bold shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 opacity-75"
                         onChange={(event) => setQuery(event.target.value)}
                         displayValue={(company) => company?.companyName}
                     />
@@ -41,7 +41,7 @@ export default function Combox() {
                     </Combobox.Button>
 
                     {companyData.length > 0 && (
-                        <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm opacity-90 font-bold">
                             {filteredCompanies.map((company, index) => (
                                 <Combobox.Option
                                     key={index}
