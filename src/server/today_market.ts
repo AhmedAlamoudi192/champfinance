@@ -32201,68 +32201,75 @@ export const todaysMarket = [
   ],
 ];
 
-// let text = []
+// let text = [];
 
 // for (let i = 0; i < content.length; i++) {
-//     let mystring = []
-//     for (let j = 0; j < content[i].length; j++) {
-//         mystring.push(content[i][j])
-//     }
-//     let str = JSON.stringify(mystring[i])
+//   let mystring = [];
+//   for (let j = 0; j < content[i].length; j++) {
+//     mystring.push(content[i][j]);
+//   }
+//   let str = JSON.stringify(mystring[i]);
 
-//     text.push(str)
-
+//   text.push(str);
 // }
 
 // let promp = {
-//     "model": "gpt-3.5-turbo",
-//     "temperature":0.3,
-//     "messages": [
-//         {
-//             "role":"system",
-//             "content":"the following data is todays and yesterdays market prices formatted in json"
-//         },
-//         {
-//             "role":"system",
-//             "content": text[0]
-//         },
-//                 {
-//             "role":"system",
-//             "content":text[1]
-//         },
-//                 {
-//             "role":"system",
-//             "content":text[2]
-//         },
-//                 {
-//             "role":"system",
-//             "content":text[3]
-//         },
-//          {
-//             "role":"system",
-//             "content":text[4]
-//         }, {
-//             "role":"system",
-//             "content":text[5]
-//         }, {
-//             "role":"system",
-//             "content":text[6]
-//         }, {
-//             "role":"system",
-//             "content":text[7]
-//         }, {
-//             "role":"system",
-//             "content":text[8]
-//         }, {
-//             "role":"system",
-//             "content":text[9]
-//         }, {
-//             "role":"system",
-//             "content":text[10]
-//         },
-//                 {
-//             "role": "user",
-//             "content": "You are an investor, give me most important decisions from the data, use number to back it up"
-//         }
-//     ]
-// }
+//   model: "gpt-3.5-turbo",
+//   temperature: 0.3,
+//   messages: [
+//     {
+//       role: "system",
+//       content:
+//         "the following data is todays and yesterdays market prices formatted in json",
+//     },
+//     {
+//       role: "system",
+//       content: text[0],
+//     },
+//     {
+//       role: "system",
+//       content: text[1],
+//     },
+//     {
+//       role: "system",
+//       content: text[2],
+//     },
+//     {
+//       role: "system",
+//       content: text[3],
+//     },
+//     {
+//       role: "system",
+//       content: text[4],
+//     },
+//     {
+//       role: "system",
+//       content: text[5],
+//     },
+//     {
+//       role: "system",
+//       content: text[6],
+//     },
+//     {
+//       role: "system",
+//       content: text[7],
+//     },
+//     {
+//       role: "system",
+//       content: text[8],
+//     },
+//     {
+//       role: "system",
+//       content: text[9],
+//     },
+//     {
+//       role: "system",
+//       content: text[10],
+//     },
+//     {
+//       role: "user",
+//       content:
+//         "You are an investor, give me most important decisions from the data, use number to back it up",
+//     },
+//   ],
+// };
