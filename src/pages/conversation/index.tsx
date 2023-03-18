@@ -47,10 +47,17 @@ const Chat: NextPage = () => {
         })
     )
 
-    const chatQuery = api.chat.initialChatMessage.useQuery({
+    const queryPayload = {
         type: 'text',
         company: query.company as string ?? 'aramco',
-    }, {
+    }
+
+    if (query.company === "market") {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        queryPayload.type = 'market'
+    }
+
+    const chatQuery = api.chat.initialChatMessage.useQuery(queryPayload, {
         enabled: true,
         refetchInterval: false,
         refetchOnWindowFocus: false,
@@ -74,7 +81,7 @@ const Chat: NextPage = () => {
             </header>
             <div className="overflow-y-auto mb-32">
                 {chatQuery.isLoading ? <div>
-                    <Lottie style={{height:200}}  animationData={spinner} className="m-5" />
+                    <Lottie style={{ height: 200 }} animationData={spinner} className="m-5" />
                 </div> : messagesComponent}
                 {nextMessage.isLoading ? <div className="mx-auto text-center">
                     <Spinner size={'xl'} color={'purple'}

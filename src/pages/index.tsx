@@ -58,12 +58,12 @@ const Home: NextPage = () => {
           <h3>
             Ask about market conditions and get a summary of the latest financial data.
           </h3>
-          <button
-            type="button"
+          <Link
+            href={"/conversation?company=market"}
             className="rounded-md bg-sky-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
           >
             Learn about the current Saudi Market
-          </button>
+          </Link>
         </Card>
       </section>
 

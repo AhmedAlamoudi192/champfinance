@@ -9,11 +9,12 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { scrape } from "~/server/scraper";
 import { companyData } from "~/server/data";
 import report from "splitted_text.json";
+import { todaysMarket } from "~/server/today_market";
 
 const vectaraUrl = "https://experimental.willow.vectara.io/v1/chat/completions";
 
 const userPrompt =
-  "You are a proffesional financial analyst. Based on the given data, summarize it for a highschool student. Make sure to support your analysis with figures from the report.";
+  "You are a proffesional financial analyst, give me the most important decisions from the data, use numbers to back it up";
 
 type SystemMessage = {
   role: "system";
@@ -23,6 +24,7 @@ type SystemMessage = {
 const chatPayload = (messages: z.infer<typeof messageSchema>[]) => {
   return {
     model: "gpt-3.5-turbo",
+    temperature: 0.3,
     messages,
   };
 };
@@ -33,6 +35,7 @@ export const vectaraPayload = (
 ) => {
   return {
     model: "gpt-3.5-turbo",
+    temperature: 0.3,
     messages: [
       ...systemMessages,
       {
@@ -51,6 +54,9 @@ export const requestSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("text"),
     company: z.string(),
+  }),
+  z.object({
+    type: z.literal("market"),
   }),
 ]);
 
@@ -119,6 +125,7 @@ export const chatRouter = createTRPCRouter({
     .query(async ({ input }) => {
       // Split the content into chunks able to consumed by ChatGPT
       const splitter = new RecursiveCharacterTextSplitter();
+      let chunks;
 
       if (input.type == "url") {
         const endpoint =
@@ -166,7 +173,6 @@ export const chatRouter = createTRPCRouter({
         }
       } else if (input.type === "text") {
         const companyName = input.company.toLowerCase();
-        let chunks;
 
         if (companyName !== "aramco") {
           const companyUrl = companyData.find(
@@ -194,6 +200,54 @@ export const chatRouter = createTRPCRouter({
         });
 
         const chatResponse = await getInitialMessage(chunks);
+
+        const nextMessage =
+          chatResponse.choices[chatResponse.choices.length - 1]?.message;
+
+        const messages = [...sys_messages, nextMessage];
+
+        return {
+          messages,
+        } as const;
+      } else if (input.type === "market") {
+        // const text: string[] = [];
+        // for (let i = 0; i < todaysMarket.length; i++) {
+        //   const mystring = [];
+        //   for (let j = 0; j < todaysMarket[i].length; j++) {
+        //     mystring.push(todaysMarket[i][j]);
+        //   }
+        //   const str = JSON.stringify(mystring[i]);
+
+        //   text.push(str);
+        // }
+
+        // chunks = await splitter.createDocuments(
+        //   todaysMarket.map((m) => JSON.stringify(m))
+        // );
+
+        const sys_messages = todaysMarket.flatMap((m) => {
+          return {
+            role: "system",
+            content: JSON.stringify(m),
+          } as const;
+        });
+
+        console.log(sys_messages[0])
+
+        const response = await fetch(vectaraUrl, {
+          method: "POST",
+          headers: {
+            "customer-id": "2421414240",
+            "x-api-key": process.env["VECTARA_API_KEY"],
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(vectaraPayload(sys_messages, userPrompt)),
+        });
+
+        const chatgptResponse = await response.json();
+        // console.log(chatgptResponse);
+
+        const chatResponse = chatCompletionSchema.parse(await response.json());
 
         const nextMessage =
           chatResponse.choices[chatResponse.choices.length - 1]?.message;
