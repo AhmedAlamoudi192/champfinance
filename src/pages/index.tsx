@@ -5,6 +5,7 @@ import Link from "next/link";
 import Script from "next/script";
 import Combox from "~/components/ComboBox";
 import { companyData } from "~/server/data";
+import SvgComponent from "~/components/Header";
 
 
 const Home: NextPage = () => {
@@ -18,6 +19,8 @@ const Home: NextPage = () => {
       <header className="text-5xl text-center my-8 p-2 font-black">
         ChampFinance
       </header>
+
+      {/* <SvgComponent /> */}
 
 
       <main className="p-4 lg:text-center">
