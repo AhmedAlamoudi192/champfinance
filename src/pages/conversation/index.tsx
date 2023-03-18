@@ -3,7 +3,7 @@ import { GetServerSideProps, InferGetServerSidePropsType, type NextPage } from "
 import Head from "next/head";
 import ChatInput from "~/components/ChatInput";
 import Combox from "~/components/ComboBox";
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Lottie from "lottie-react";
@@ -18,22 +18,31 @@ const Chat: NextPage = () => {
     const [messagesArray, setMessagesArray] = useState<z.infer<typeof messageSchema>[]>([]);
     const { query } = useRouter();
     const nextMessage = api.chat.nextMessage.useMutation();
-    const bottomRef = useRef<HTMLDivElement>(null);
+    const endRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        scrollToBottom();
+    }, [messagesArray])
 
     const scrollToBottom = () => {
-        bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+        if (endRef !== null && endRef.current !== null) {
+            endRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     const nonSystemMessages = messagesArray.filter((message) => message.role !== "system");
 
 
     const messagesComponent = (
-        nonSystemMessages.map((message, index) => (
-            <Card key={index} className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2">
-                <span className="font-black text-lg">{message.role === "user" ? "You" : "ChimpFinance"} </span>
-                {message.content}
-            </Card>
-        ))
+        nonSystemMessages.map((message, index) => {
+            const isLastMessage = index === nonSystemMessages.length - 1;
+            return (
+                <Card key={index} className="p-4 leading-7 shadow-xl max-w-[90%] mx-auto rounded-xl mb-2 text-justify" ref={isLastMessage ? endRef : undefined}>
+                    <span className="font-black text-lg">{message.role === "user" ? "You" : "ChampFinance"} </span>
+                    {message.content}
+                </Card>
+            )
+        })
     )
 
     const chatQuery = api.chat.initialChatMessage.useQuery({
@@ -59,7 +68,7 @@ const Chat: NextPage = () => {
             <header className="text-5xl text-center my-8 font-black">
                 ChampFinance
             </header>
-            <div className="mb-64" ref={bottomRef}>
+            <div className="overflow-y-auto">
                 {chatQuery.isLoading ? <div>
                     <Lottie animationData={spinner} className="p-5" />
                 </div> : messagesComponent}
@@ -74,14 +83,12 @@ const Chat: NextPage = () => {
                     setMessagesArray(messagesWithNewOne);
                     const result = await nextMessage.mutateAsync(messagesWithNewOne);
                     setMessagesArray([...messagesWithNewOne, result.message]);
-                    scrollToBottom();
                 }
             }} onIconClick={async function () {
                 const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const];
                 setMessagesArray(messagesWithNewOne);
                 const result = await nextMessage.mutateAsync(messagesWithNewOne);
                 setMessagesArray([...messagesWithNewOne, result.message]);
-                scrollToBottom();
             }} />
         </>
     );
