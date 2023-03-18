@@ -1,6 +1,9 @@
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 
 export default function ChatInput({ onIconClick, ...props }: React.ComponentProps<"input"> & { onIconClick: () => void | Promise<void> }) {
+
+
+    
     return (
         <div className="p-2 bottom-4">
             <label htmlFor="chat" className="sr-only">

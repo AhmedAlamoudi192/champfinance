@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
 import Combox from "~/components/ComboBox";
+import { companyData } from "~/server/data";
 
 
 const Home: NextPage = () => {
@@ -29,21 +30,27 @@ const Home: NextPage = () => {
       </main>
 
       <section className="flex flex-col gap-8 mb-32">
-        <Card className="flex flex-col items-center mx-4">
-          <h2 className="font-black text-indigo-800 text-4xl">Balance Sheets and Income Statements</h2>
+        <Card className="flex flex-col items-center mx-4 md:w-[50%] md:mx-auto shadow-xl">
+          <h2 className="font-black text-indigo-800 text-4xl">Financial Statistics</h2>
           <h3>
-            Explore a company&apos;s balance sheet and income statement and get ahead of the market.
+            Make a better investment by knowing a company&apos;s balance sheet and income statement.
           </h3>
-          <Combox queryType="balance_sheet_and_income_statement" />
+          <Combox queryType="stats" companies={companyData} />
         </Card>
-        <Card className="flex flex-col items-center mx-4">
+        <Card className="flex flex-col items-center mx-4 md:w-[50%] md:mx-auto">
           <h2 className="font-black text-blue-800 text-4xl">Financial Statements</h2>
           <h3>
             Explore a company&apos;s financial statements and get a better overview of the company&apos;s financial health.
           </h3>
-          <Combox queryType="fin_statement" />
+          <Combox queryType="fin_statement" companies={[
+            {
+              companyName: 'Aramco',
+              companyRef: 0,
+              companyUrl: 'https://www.saudiaramco.com/en'
+            }
+          ]} />
         </Card>
-        <Card className="flex flex-col items-center mx-4">
+        <Card className="flex flex-col items-center mx-4 md:w-[50%] md:mx-auto">
           <h2 className="font-black text-sky-800 text-4xl">Market Conditions</h2>
           <h3>
             Ask about market conditions and get a summary of the latest financial data.
@@ -56,6 +63,10 @@ const Home: NextPage = () => {
           </button>
         </Card>
       </section>
+
+      <small className="block text-center font-semibold max-auto mb-4">
+        This is not financial advice. This is only for educational &amp; informational purposes.
+      </small>
 
     </>
   );

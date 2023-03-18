@@ -43,7 +43,6 @@ const Chat: NextPage = () => {
                         {message.content}
                     </Card>
                 </div>
-
             )
         })
     )
@@ -75,7 +74,7 @@ const Chat: NextPage = () => {
             </header>
             <div className="overflow-y-auto">
                 {chatQuery.isLoading ? <div>
-                    <Lottie animationData={spinner} className="p-5" />
+                    <Lottie style={{height:50}}  animationData={spinner} className="m-5" />
                 </div> : messagesComponent}
                 {nextMessage.isLoading ? <div className="mx-auto text-center">
                     <Spinner size={'xl'} color={'purple'}
@@ -86,12 +85,14 @@ const Chat: NextPage = () => {
                 if (e.key === "Enter") {
                     const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const];
                     setMessagesArray(messagesWithNewOne);
+                    setMessage("");
                     const result = await nextMessage.mutateAsync(messagesWithNewOne);
                     setMessagesArray([...messagesWithNewOne, result.message]);
                 }
             }} onIconClick={async function () {
                 const messagesWithNewOne = [...messagesArray, { role: "user", content: message } as const];
                 setMessagesArray(messagesWithNewOne);
+                setMessage("");
                 const result = await nextMessage.mutateAsync(messagesWithNewOne);
                 setMessagesArray([...messagesWithNewOne, result.message]);
             }} />

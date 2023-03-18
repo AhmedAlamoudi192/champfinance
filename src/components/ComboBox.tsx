@@ -2,32 +2,36 @@ import { useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import Link from 'next/link'
-import { companyData } from '~/server/data'
 
 export function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
 type ComboxProps = {
-    queryType: "balance_sheet_and_income_statement" | "fin_statement"
+    queryType: "stats" | "fin_statement"
+    companies: {
+        companyName: string;
+        companyUrl: string;
+        companyRef: number;
+    }[]
 }
 
 export default function Combox(props: ComboxProps) {
     const [query, setQuery] = useState('')
-    const [selectedCompany, setSelectedCompany] = useState(companyData[0])
+    const [selectedCompany, setSelectedCompany] = useState(props.companies[0])
 
     const color = props.queryType === "fin_statement" ? "blue" : "indigo"
 
     // const filteredCompanies =
     //     query === ''
-    //         ? companyData
+    //         ? props.companies
     //         : companies.filter((c) => {
     //             return c.name.toLowerCase().includes(query.toLowerCase())
     //         })
 
-    const filteredCompanies = companyData.filter((c) => {
+    const filteredCompanies = props.companies.filter((c) => {
         if (query === '') {
-            return companyData
+            return props.companies
         }
         return c.companyName.toLowerCase().includes(query.toLowerCase())
     })
@@ -46,12 +50,13 @@ export default function Combox(props: ComboxProps) {
                         <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     </Combobox.Button>
 
-                    {companyData.length > 0 && (
+                    {props.companies.length > 0 && (
                         <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm opacity-95 font-bold">
                             {filteredCompanies.map((company, index) => (
                                 <Combobox.Option
                                     key={index}
                                     value={company}
+                                    defaultValue={props.companies[0]?.companyName}
                                     className={({ active }) =>
                                         classNames(
                                             'relative cursor-default select-none py-2 pl-3 pr-9',
@@ -84,7 +89,7 @@ export default function Combox(props: ComboxProps) {
 
             <Link
                 className={`rounded-md bg-${color}-600 py-2.5 px-3.5 text-center font-semibold text-white shadow-sm hover:bg-${color}-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${color}-600`} href={`/conversation/?company=${selectedCompany?.companyName}`}         >
-                Summarize Latest Report
+                Summarize Latest {props.queryType === "fin_statement" ? "Statement" : "Report"}
             </Link>
 
         </>
